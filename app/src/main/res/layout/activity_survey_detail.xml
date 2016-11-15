@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_survey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_small"
+        android:background="@color/black_alpha_40"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+
+            <ImageButton
+                android:id="@+id/imageButton_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:background="@null"
+                tools:ignore="ContentDescription"
+                android:src="@drawable/ic_keyboard_backspace_white_36dp"
+                />
+
+            <TextView
+                android:id="@+id/text_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/surveys"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large"
+                android:textStyle="bold"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:background="@null"
+                android:src="@drawable/ic_menu_white_36dp"
+                tools:ignore="ContentDescription"
+                />
+
+        </android.support.v7.widget.Toolbar>
+
+        <View
+            android:id="@+id/view_separator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_thin"
+            android:layout_below="@+id/toolbar"
+            android:background="@color/white"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_larger"
+            android:textStyle="normal|bold"
+            tools:targetApi="jelly_bean"
+            />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_title"
+            android:gravity="center"
+            android:paddingBottom="@dimen/spacing_small"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/white"
+            tools:targetApi="jelly_bean"
+            />
+
+    </RelativeLayout>
+
+   <!-- <ProgressBar
+        android:id="@+id/progressBar_load"
+        android:layout_width="@dimen/progressBar_large"
+        android:layout_height="@dimen/progressBar_large"
+        android:layout_gravity="center"
+        android:theme="@style/CircularProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        />-->
+
+    <Button
+        android:id="@+id/button_take_survey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:padding="@dimen/spacing_small"
+        android:background="@drawable/button_selector"
+        android:text="@string/take_the_survey"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:typeface="sans"
+        android:onClick="navigateClick"
+        android:visibility="gone"
+        />
+
+</FrameLayout>
