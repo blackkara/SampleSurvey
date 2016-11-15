@@ -43,7 +43,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/surveys"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_large"
                 android:textStyle="bold"
@@ -102,30 +101,5 @@
             />
 
     </RelativeLayout>
-
-   <!-- <ProgressBar
-        android:id="@+id/progressBar_load"
-        android:layout_width="@dimen/progressBar_large"
-        android:layout_height="@dimen/progressBar_large"
-        android:layout_gravity="center"
-        android:theme="@style/CircularProgress"
-        style="@style/Widget.AppCompat.ProgressBar"
-        />-->
-
-    <Button
-        android:id="@+id/button_take_survey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:padding="@dimen/spacing_small"
-        android:background="@drawable/button_selector"
-        android:text="@string/take_the_survey"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
-        android:typeface="sans"
-        android:onClick="navigateClick"
-        android:visibility="gone"
-        />
 
 </FrameLayout>
