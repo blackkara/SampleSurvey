@@ -1,5 +1,6 @@
 package com.blackkara.samplesurvey.model;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 public class Survey {
@@ -57,5 +58,15 @@ public class Survey {
         }
 
         return mCoverImageUrl + suffix;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public static Survey fromJson(String json){
+        Gson gson = new Gson();
+        return gson.fromJson(json, Survey.class);
     }
 }
