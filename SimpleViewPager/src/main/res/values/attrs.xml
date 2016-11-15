@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleViewPager">
+        <attr name="forceSquare" format="boolean" />
+        <attr name="vertical" format="boolean" />
+        <attr name="circlesPaddingTop" format="dimension" />
+        <attr name="circlesPaddingBottom" format="dimension" />
+        <attr name="scaleType" format="enum">
+            <enum name="CENTER" value="0"/>
+            <enum name="CENTER_CROP" value="1"/>
+            <enum name="CENTER_INSIDE" value="2"/>
+            <enum name="FIT_CENTER" value="3"/>
+            <enum name="FIT_END" value="4"/>
+            <enum name="FIT_START" value="5"/>
+            <enum name="FIT_XY" value="6"/>
+            <enum name="MATRIX" value="7"/>
+        </attr>
+    </declare-styleable>
+</resources>
