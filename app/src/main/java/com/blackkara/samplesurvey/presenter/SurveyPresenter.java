@@ -1,12 +1,19 @@
 package com.blackkara.samplesurvey.presenter;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.blackkara.samplesurvey.model.Survey;
 import com.blackkara.samplesurvey.network.USayService;
 import com.blackkara.samplesurvey.network.USayServiceApi;
+import com.blackkara.samplesurvey.view.SurveyView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -17,35 +24,53 @@ import rx.schedulers.Schedulers;
 public class SurveyPresenter {
     private static final String TAG = SurveyPresenter.class.getSimpleName();
 
-    private static final String DEFAULT_SURVEY_IMG_RESOLUTION = Survey.RESOLUTION_LARGE;
-    private static final int DEFAULT_SURVEY_LIST_PAGE = 1;
-    private static final int DEFAULT_SURVEY_LIST_PER_PAGE = 30;
+    private static final String DEFAULT_SURVEY_IMG_RESOLUTION = Survey.RESOLUTION_MEDIUM;
+    private static final int DEFAULT_SURVEY_LIST_PAGE = 2;
+    private static final int DEFAULT_SURVEY_LIST_PER_PAGE = 10;
 
     private int mPage;
     private int mPerPage;
     private String mImgResolution;
+    private int mCurrentSurveyPosition;
+    private SurveyView mSurveyView;
     private USayServiceApi mUSayServiceApi;
     private Subscription mSurveyListSubscription;
+    private List<Survey> mSurveys = new ArrayList<>();
 
-    public SurveyPresenter(){
+    public SurveyPresenter(SurveyView view){
+        mSurveyView = view;
+        mCurrentSurveyPosition = -1;
         mPage = DEFAULT_SURVEY_LIST_PAGE;
         mPerPage = DEFAULT_SURVEY_LIST_PER_PAGE;
         mImgResolution = DEFAULT_SURVEY_IMG_RESOLUTION;
 
         mUSayServiceApi = USayService.getInstance().getApi();
 
-        loadSurveyList(false);
+        mSurveyView.showProgress(true);
+
+        if(mSurveyView.onceStarted()){
+            loadFromCache();
+            if(mSurveys.size() == 0){
+                loadSurveyList(false);
+
+            }
+        } else {
+            loadSurveyList(false);
+        }
     }
 
     /**
      * Release all sources we use, so we don't need this presenter anymore
      */
     public void onDestroy(){
+        mSurveyView = null;
         unsubscribe();
     }
 
 
     public void loadSurveyList(){
+        mCurrentSurveyPosition = -1;
+        mSurveyView.showProgress(true);
         loadSurveyList(true);
     }
 
@@ -77,9 +102,26 @@ public class SurveyPresenter {
                         }
                         @Override
                         public void onNext(List<Survey> surveys) {
+                            cacheSurveys(surveys);
+                            handleSurveys(surveys);
                             Log.d(TAG, "Survey list is fetched, count : " + surveys.size());
                         }
                     });
+        }
+    }
+
+    private void handleSurveys(List<Survey> surveys){
+        mSurveys = surveys;
+        if(mSurveys.size() > 0){
+            int size = surveys.size();
+            String[] urlArray = new String[size];
+            for (int i = 0; i < surveys.size(); i++) {
+                urlArray[i] = surveys.get(i).getCoverImageUrl(mImgResolution);
+            }
+            mSurveyView.showProgress(false);
+            mSurveyView.loadImages(urlArray);
+            mCurrentSurveyPosition = 0;
+            showSurvey(0);
         }
     }
 
@@ -104,5 +146,45 @@ public class SurveyPresenter {
             mSurveyListSubscription.unsubscribe();
             Log.d(TAG, "Survey list unsubscribed");
         }
+    }
+
+    public void showSurvey(int idx){
+        if(mSurveys.size() > 0){
+            mCurrentSurveyPosition = idx;
+            mSurveyView.showSurvey(mSurveys.get(idx));
+        }
+    }
+
+    public Survey getCurrentSurvey(){
+        return mSurveys.get(mCurrentSurveyPosition);
+    }
+
+    private void cacheSurveys(List<Survey> surveys){
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(mSurveyView.getAppContext());
+
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+
+        String json = gson.toJson(surveys);
+
+        editor.putString(TAG, json);
+        editor.apply();
+    }
+
+    private void loadFromCache(){
+        List<Survey> surveys = new ArrayList<>();
+
+        SharedPreferences sharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(mSurveyView.getAppContext());
+
+        if(sharedPrefs.contains(TAG)){
+            Gson gson = new Gson();
+            String json = sharedPrefs.getString(TAG, null);
+            Type type = new TypeToken<ArrayList<Survey>>() {}.getType();
+            surveys =  gson.fromJson(json, type);
+        }
+
+        handleSurveys(surveys);
     }
 }
