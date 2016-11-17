@@ -1,8 +1,17 @@
 package com.blackkara.samplesurvey.network;
 
-class USayUrl {
-    static final String BASE = "https://www-staging.usay.co";
-    static final String SURVEY_LIST = BASE + "/app/surveys";
-    static final String QUERY_PAGE = "page";
-    static final String QUERY_PER_PAGE = "per_page";
+import android.content.Context;
+
+import com.blackkara.samplesurvey.R;
+
+public class USayUrl {
+    private static String sBaseUrl;
+
+    public static void init(Context context){
+        sBaseUrl = context.getString(R.string.base);
+    }
+
+    static String getBaseUrl(){
+        return sBaseUrl;
+    }
 }

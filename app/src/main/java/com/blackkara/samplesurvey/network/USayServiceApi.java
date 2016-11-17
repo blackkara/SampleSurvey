@@ -17,7 +17,7 @@ public interface USayServiceApi {
      * @param page Indicates items of page temper to perPage value
      * @param perPage Item count for a page
      */
-    @GET(USayUrl.SURVEY_LIST)
-    Observable<List<Survey>> getSurveyList(@Query(USayUrl.QUERY_PAGE) int page,
-                                           @Query(USayUrl.QUERY_PER_PAGE) int perPage);
+    @GET("/app/surveys")
+    Observable<List<Survey>> getSurveyList(@Query("page") int page,
+                                           @Query("per_page") int perPage);
 }

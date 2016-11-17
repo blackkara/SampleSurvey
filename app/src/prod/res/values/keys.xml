@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Production flavor -->
+    <string name="access_token" translatable="false">Bearer 6eebeac3dd1dc9c97a06985b6480471211a777b39aa4d0e03747ce6acc4a3369</string>
+</resources>

@@ -30,10 +30,10 @@ public class USayService {
             OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
             httpClientBuilder.readTimeout(TIMEOUT_READ_IN_SECONDS, TimeUnit.SECONDS);
             httpClientBuilder.connectTimeout(TIMEOUT_CONN_IN_SECONDS, TimeUnit.SECONDS);
-            httpClientBuilder.addInterceptor(new USayAuthInterceptor(USayAuth.AUTHORIZATION));
+            httpClientBuilder.addInterceptor(new USayAuthInterceptor(USayAuth.getAuthToken()));
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(USayUrl.BASE)
+                    .baseUrl(USayUrl.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .client(httpClientBuilder.build())

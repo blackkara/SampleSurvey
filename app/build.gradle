@@ -17,6 +17,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors{
+        devel{
+            applicationId "com.blackkara.samplesurvey.devel"
+            buildConfigField "boolean", "PRODUCTION", "false"
+        }
+
+        prod{
+            applicationId "com.blackkara.samplesurvey"
+            buildConfigField "boolean", "PRODUCTION", "true"
+        }
+    }
 }
 
 dependencies {
