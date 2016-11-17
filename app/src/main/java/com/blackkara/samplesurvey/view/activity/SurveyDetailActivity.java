@@ -70,6 +70,7 @@ public class SurveyDetailActivity extends AppCompatActivity {
         Picasso.with(SurveyDetailActivity.this)
                 .load(survey.getCoverImageUrl(mImgResolution))
                 .tag(TAG)
+                .fit()
                 .into(mImageViewSurvey);
 
     }

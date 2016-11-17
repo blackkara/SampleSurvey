@@ -88,7 +88,7 @@ public class SurveyActivity extends AppCompatActivity implements SurveyView, Vie
         mViewPager.setImageUrls(urls, new ImageURLLoader() {
             @Override
             public void loadImage(ImageView view, String url) {
-                Picasso.with(SurveyActivity.this).load(url).tag(TAG).into(view);
+                Picasso.with(SurveyActivity.this).load(url).fit().tag(TAG).into(view);
             }
         });
 
