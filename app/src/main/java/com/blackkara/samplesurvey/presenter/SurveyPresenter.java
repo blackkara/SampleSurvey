@@ -5,8 +5,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.blackkara.samplesurvey.model.Survey;
-import com.blackkara.samplesurvey.network.USayService;
-import com.blackkara.samplesurvey.network.USayServiceApi;
+import com.blackkara.samplesurvey.network.ServiceApi;
+import com.blackkara.samplesurvey.network.IServiceApi;
 import com.blackkara.samplesurvey.view.SurveyView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,7 +33,7 @@ public class SurveyPresenter {
     private String mImgResolution;
     private int mCurrentSurveyPosition;
     private SurveyView mSurveyView;
-    private USayServiceApi mUSayServiceApi;
+    private IServiceApi mIServiceApi;
     private Subscription mSurveyListSubscription;
     private List<Survey> mSurveys = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class SurveyPresenter {
         mPerPage = DEFAULT_SURVEY_LIST_PER_PAGE;
         mImgResolution = DEFAULT_SURVEY_IMG_RESOLUTION;
 
-        mUSayServiceApi = USayService.getInstance().getApi();
+        mIServiceApi = ServiceApi.getInstance().getApi();
 
         mSurveyView.showProgress(true);
 
@@ -88,7 +88,7 @@ public class SurveyPresenter {
             }
 
             Log.d(TAG, "Subscribed to survey list. Page : " + mPage + " Per page : " + mPerPage);
-            mSurveyListSubscription = mUSayServiceApi.getSurveyList(mPage, mPerPage)
+            mSurveyListSubscription = mIServiceApi.getSurveyList(mPage, mPerPage)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<List<Survey>>() {

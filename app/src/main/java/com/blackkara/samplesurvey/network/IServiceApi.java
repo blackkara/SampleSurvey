@@ -11,7 +11,7 @@ import rx.Observable;
 /**
  * Interface for endpoint of USay api
  */
-public interface USayServiceApi {
+public interface IServiceApi {
     /**
      * Fetch surveys with server-side paging mechanism
      * @param page Indicates items of page temper to perPage value

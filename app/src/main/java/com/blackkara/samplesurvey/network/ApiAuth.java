@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.blackkara.samplesurvey.R;
 
-public class USayAuth {
+public class ApiAuth {
 
     private static String sAuthToken;
 

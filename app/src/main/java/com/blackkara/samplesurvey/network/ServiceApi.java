@@ -8,40 +8,40 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
 
-public class USayService {
+public class ServiceApi {
     private static final long TIMEOUT_CONN_IN_SECONDS = 15;
     private static final long TIMEOUT_READ_IN_SECONDS = 30;
 
-    private static USayService sUSayService;
+    private static ServiceApi sServiceApi;
 
-    private USayServiceApi mUSayServiceApi;
+    private IServiceApi mIServiceApi;
 
-    private USayService(){}
+    private ServiceApi(){}
 
-    public static USayService getInstance(){
-        if (sUSayService == null) {
-            sUSayService = new USayService();
+    public static ServiceApi getInstance(){
+        if (sServiceApi == null) {
+            sServiceApi = new ServiceApi();
         }
-        return sUSayService;
+        return sServiceApi;
     }
 
-    public USayServiceApi getApi(){
-        if(mUSayServiceApi == null){
+    public IServiceApi getApi(){
+        if(mIServiceApi == null){
             OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
             httpClientBuilder.readTimeout(TIMEOUT_READ_IN_SECONDS, TimeUnit.SECONDS);
             httpClientBuilder.connectTimeout(TIMEOUT_CONN_IN_SECONDS, TimeUnit.SECONDS);
-            httpClientBuilder.addInterceptor(new USayAuthInterceptor(USayAuth.getAuthToken()));
+            httpClientBuilder.addInterceptor(new ApiAuthInterceptor(ApiAuth.getAuthToken()));
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(USayUrl.getBaseUrl())
+                    .baseUrl(ApiUrl.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .client(httpClientBuilder.build())
                     .build();
 
-            mUSayServiceApi =  retrofit.create(USayServiceApi.class);
+            mIServiceApi =  retrofit.create(IServiceApi.class);
         }
 
-        return mUSayServiceApi;
+        return mIServiceApi;
     }
 }

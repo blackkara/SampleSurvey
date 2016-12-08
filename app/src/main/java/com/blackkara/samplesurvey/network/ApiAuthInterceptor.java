@@ -8,14 +8,14 @@ import okhttp3.Response;
 
 /**
  * Implement token authentication
- * USayAuthInterceptor integrates token and adds to header of each request
+ * ApiAuthInterceptor integrates token and adds to header of each request
  * for Authorization value. Our http client passes this value automatically
  */
-class USayAuthInterceptor implements Interceptor {
+class ApiAuthInterceptor implements Interceptor {
 
     private String mAuthorization;
 
-    USayAuthInterceptor(String Authorization){
+    ApiAuthInterceptor(String Authorization){
         mAuthorization = Authorization;
     }
 

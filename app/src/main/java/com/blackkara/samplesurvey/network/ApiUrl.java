@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.blackkara.samplesurvey.R;
 
-public class USayUrl {
+public class ApiUrl {
     private static String sBaseUrl;
 
     public static void init(Context context){

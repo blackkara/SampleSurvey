@@ -2,8 +2,8 @@ package com.blackkara.samplesurvey;
 
 import android.app.Application;
 
-import com.blackkara.samplesurvey.network.USayAuth;
-import com.blackkara.samplesurvey.network.USayUrl;
+import com.blackkara.samplesurvey.network.ApiAuth;
+import com.blackkara.samplesurvey.network.ApiUrl;
 
 public class SurveyApp extends Application{
 
@@ -15,10 +15,10 @@ public class SurveyApp extends Application{
     }
 
     private void initUSayAuth(){
-        USayAuth.init(getApplicationContext());
+        ApiAuth.init(getApplicationContext());
     }
 
     private void initUSayUrl(){
-        USayUrl.init(getApplicationContext());
+        ApiUrl.init(getApplicationContext());
     }
 }
